@@ -12,14 +12,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::prefix(LaravelLocalization::setLocale())->middleware(['localeSessionRedirect', 'localizationRedirect'])->group(function () {
+    Route::get('/', function () {
+        return view('create');
+    });
 
-Route::get('/', function () {
-    return view('create');
-});
-
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth'])->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('dashboard');
+    // })->middleware(['auth'])->name('dashboard');
 
     Route::middleware('auth')
         ->prefix('admin')
@@ -30,4 +30,9 @@ Route::get('/', function () {
 
             Route::resource('users', 'UserController');
         });
+});
+
+Route::get('/bc', function () {
+    return view('BC');
+});
 require __DIR__.'/auth.php';

@@ -15,17 +15,15 @@
         <!-- Navbar Search -->
         <li class="nav-item">
             <div class="">
-                <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                    @foreach(config('app.available_locales') as $locale)
-                       
-                            <a href="{{ request()->url()}}?language={{ $locale }}"
-                                class="@if (app()->getLocale() == $locale) border-indigo-400 @endif inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out">
-                                [{{ strtoupper($locale) }}]  
-                            </a>
-                       
-                    @endforeach
-                </div>
-                <a href="{{route('logout')}}" class="btn btn-block btn-secondary">{{__('form.Logout')}}</a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                    <x-dropdown-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </x-dropdown-link>
+                </form>
             </div>
         </li>
     </ul>

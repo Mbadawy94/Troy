@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -43,7 +45,25 @@ class UserController extends Controller
             'address' => $request->address,
         ]);
 
-        return redirect('/admin/users');
+        $email_data = array(
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'country' => $request->country,
+            'city' => $request->city,
+            'address' => $request->address,
+        );
+
+        $pdf = PDF::loadView('BC', $email_data);
+
+        Mail::send('WelcomeMail', $email_data, function ($message) use ($email_data, $pdf) {
+            $message->to($email_data['email'], $email_data['name'])
+                ->subject('Welcome')
+                ->from('info@troy.com', 'Troy')
+                ->attachData($pdf->output(), 'BusinessCard.pdf');
+        });
+
+        return redirect()->back();
     }
 
     

@@ -27,6 +27,9 @@
         'User Details' => 'User Details',
         'Update' => 'Update',
         'Edit User' => 'Edit User',
+        'Log in' => 'Log in',
+        'Register' => 'Register',
+
         
     ]
 ?>
